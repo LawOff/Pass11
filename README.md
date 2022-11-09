@@ -39,8 +39,6 @@
 App made using [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter "CustomTkinter") .
 Thanks to [TomSchimansky](https://github.com/TomSchimansky/ "TomSchimansky").
 
-## Soon:
-
 **IMPORTANT:** This app is a very early version, it's just a fun project I did.
 
 
