@@ -39,7 +39,8 @@
 App made using [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter "CustomTkinter") .
 Thanks to [TomSchimansky](https://github.com/TomSchimansky/ "TomSchimansky").
 
-**IMPORTANT:** This app is a very early version, it's just a fun project I did.
+**IMPORTANT:** This app is a very early version, it's just a fun project I did. <br>
+**2: It can takes between 5-10s to start, due to the import of the js alogrythm.**
 
 
 **09/11/2022.**
