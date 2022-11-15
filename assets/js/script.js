@@ -1,3 +1,23 @@
+/* algorithm not made by me, credits: */
+
+/* Copyright (c) 2012 Dropbox, Inc.
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions: 
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
+
 (function() {
     var w, p, q, x, J, K, L, M, N, O, P, Q, y, s, z, R, S, T, U, V, W;
     P = function(b) {
@@ -1027,30 +1047,7 @@
     "function" === typeof zxcvbn_load_hook && zxcvbn_load_hook()
 })();
 
-function dump(arr, level) {
-    var dumped_text = "";
-    if (!level) level = 0;
-    var level_padding = "";
-    for (var j = 0; j < level + 1; j++) level_padding += "    ";
-    if (typeof(arr) == 'object') { //Array/Hashes/Objects
-        for (var item in arr) {
-            var value = arr[item];
-            if (typeof(value) == 'object') { //If it is an array,
-                dumped_text += level_padding + "'" + item + "' ...<br />";
-                dumped_text += dump(value, level + 1);
-            } else {
-                dumped_text += level_padding + "'" + item + "' => \"" + value + "\"<br />";
-            }
-        }
-    } else { //Stings/Chars/Numbers etc.
-        dumped_text = "===>" + arr + "<===(" + typeof(arr) + ")";
-    }
-    return dumped_text;
-}
-
-
 function toWords(number) {
-    //is merely seconds, just return rounded numebr
     if (number < 120) {
         return getNumberWords(number, true) + " seconds";
     }
@@ -1131,96 +1128,6 @@ function checkThisPassword(password) {
     var strength = checked.score;
     var timeinwords = toWords(timetocrack);
     return [timeinwords, strength];
-}
-
-function displayWeakExplanation(matchSequence, strength) {
-    var strengthtext = false;
-    switch (strength) {
-        case 0:
-            strengthtext = " very weak ";
-            break;
-        case 1:
-            strengthtext = " weak ";
-            break;
-        case 2:
-            strengthtext = " of medium strength ";
-            break;
-    }
-    var matchSize = matchSequence.length;
-    var pattern = false;
-    var dictionary = false;
-    var word = false;
-    var matchType = false;
-    var containsWord = "contains";
-    var result = new Array();
-    for (var i = 0; i < matchSize; i++) {
-        pattern = matchSequence[i].pattern;
-        thisRes = false;
-        switch (pattern) {
-            case "dictionary":
-                dictionary = dictionaryType(matchSequence[i])
-                thisType = dictionary["type"];
-                thisWord = dictionary["word"];
-                if (!result[thisType]) {
-                    result[thisType] = new Array();
-                }
-                //result[thisType]["count"]++;
-                result[thisType][thisWord] = true;
-                break;
-            case "spatial":
-                if (matchSequence[i]["graph"] != "dvorak") {
-                    if (!result["combination of characters that are close together on the keyboard"]) {
-                        result["combination of characters that are close together on the keyboard"] = new Array();
-                    }
-                    thisWord = matchSequence[i]["matched_word"];
-                    result["combination of characters that are close together on the keyboard"][thisWord] = true;
-                }
-                break;
-            case "sequence":
-                if (!result["sequence of characters"]) {
-                    result["sequence of characters"] = new Array();
-                }
-                thisWord = matchSequence[i]["matched_word"];
-                result["sequence of characters"][thisWord] = true;
-                break;
-        }
-    }
-    var hasWords = false;
-    if (matchSize > 0) {
-        if (matchSize === 1) {
-            explanation = "Your password is " + strengthtext + " because it is ";
-        } else {
-            explanation = "Your password is " + strengthtext + " because it contains ";
-        }
-        matchSize = 0;
-        for (h in result) {
-            matchSize++;
-        }
-        var andString = " ";
-        var commaString = ", ";
-        var thisCount = 0;
-        //gathered all information, now to translate into words
-        for (matchType in result) {
-            thisElem = result[matchType];
-            count = 0;
-            for (h in thisElem) {
-                count++;
-            }
-            thisCount++;
-            if (thisCount >= matchSize && matchSize != 1) {
-                andString = " and ";
-            }
-            if (count > 1) {
-                explanation += andString + count + " " + matchType + "s";
-                hasWords = true;
-            } else {
-                explanation += andString + " a " + matchType;
-                hasWords = true;
-            }
-            andString = ", ";
-        }
-        explanation += ".";
-    }
 }
 
 function dictionaryType(pattern) {

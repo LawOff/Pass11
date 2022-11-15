@@ -1,0 +1,4 @@
+customtkinter==4.6.3
+Js2Py==0.71
+tksvg==0.7.4
+win32mica==1.6
