@@ -38,7 +38,7 @@
 App made using [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter "CustomTkinter") .
 Thanks to [TomSchimansky](https://github.com/TomSchimansky/ "TomSchimansky").
 
-**CREDITS:** Algorythm [./assets/js/script.js](https://github.com/LawOff/Pass11/blob/0.0.2/assets/js/script.js "./assets/js/script.js") used to analyse the password, credits to DropBox.
+**CREDITS:** Algorythm [./assets/js/script.js](https://github.com/LawOff/Pass11/blob/0.0.2/assets/js/script.js "./assets/js/script.js") used to analyse the password, all credits to DropBox.
 
 **IMPORTANT:** This app is a very early version, it's just a fun project I did. <br>
 **2: It can takes between 5-10s to start, due to the import of the js alogrythm.**
