@@ -19,7 +19,7 @@ def resCharaSetOff(password):
     return resCharaSet
 
 def AlgoCheck(password,tempfile):
-    strength = ["Very Weark", "Weak", "Good", "Strong", "Very Strong"]
+    strength = ["Very Weak", "Weak", "Good", "Strong", "Very Strong"]
     result= tempfile.checkThisPassword(password)
 
     resStrength = {"strength": strength[result[1]]}
