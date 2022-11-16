@@ -30,7 +30,7 @@ def AlgoCheck(password,tempfile):
     
     resColor = {"color": "#767676"}
     
-    if resStrength["strength"] == "Very Weark":
+    if resStrength["strength"] == "Very Weak":
         resColor = {"color": "#767676"}
     elif resStrength["strength"] == "Weak":
         resColor = {"color": "#FF8C00"}
