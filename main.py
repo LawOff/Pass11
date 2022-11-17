@@ -1,3 +1,4 @@
+import contextlib
 from algo import AlgoCheck
 import tkinter as tk
 import js2py, os, ctypes, tksvg
@@ -19,35 +20,11 @@ class PassCheck(customtkinter.CTkFrame):
         self.strenstr = tk.StringVar()
         self.showval = False
         self.passstr = tk.StringVar()
+        self.crackstr = tk.StringVar()
         self.passstr.trace("w", lambda name, index, mode, x=self.passstr: self._update(x))
+        self.crackstr.trace("w", lambda name, index, mode, x=self.crackstr: self._update(x))
         #self.loader()
         self.makeWidgets()
-        """
-    def loader(self):
-        self.loader_image = self.load_image("/assets/loader.svg")
-        self.loader_window = customtkinter.CTkToplevel(self)
-        self.loader_window.title("")
-        self.loader_window.geometry("250x140")
-        x = root.winfo_x()
-        y = root.winfo_y()
-        self.loader_window.geometry("+%d+%d" % (x + 85, y))
-        self.loader_window.deiconify()
-        ApplyMica(HWND=ctypes.windll.user32.GetForegroundWindow(),ColorMode=MICAMODE.DARK)
-        self.loader_window.update()
-        self.loader_window.iconbitmap(f"{default_path}/assets/icon_pass11.ico")
-        self.loader_window.wm_attributes("-topmost", 1)
-        self.loader_window.grab_set()
-        self.loader_window.focus_set()
-        self.loader_window.protocol("WM_DELETE_WINDOW", self.loader_window.destroy)
-
-
-        self.loader_frame = customtkinter.CTkFrame(self.loader_window)
-        self.loader_frame.pack(fill=tk.X, expand=tk.NO, pady=2, padx=2)
-
-        self.loader_label = customtkinter.CTkLabel(self.loader_frame, image=self.loader_image)
-        self.loader_label.pack(fill=tk.X, expand=tk.NO, pady=2, padx=2)
-        """
-
     def makeWidgets(self): 
         
         self.lower_image = self.load_image("/assets/lower_image.svg")
@@ -73,12 +50,17 @@ class PassCheck(customtkinter.CTkFrame):
         
         self.show = customtkinter.CTkButton(self.g, text=None, image=self.showeye_image, fg_color="#181A1B", width=35, height=35, command=self.ShowPass)
         self.show.pack(side=tk.RIGHT, padx=0, pady=5)
+        
 
         self.progressbar = customtkinter.CTkProgressBar(self, orient=tk.HORIZONTAL, progress_color="#767676", width=250, fg_color="#1c1c1c")
         self.progressbar.set(0)
         self.progressbar.pack(fill=tk.X, expand=tk.NO, pady=2, padx=2)
         
-        self._setPass(self._elapsedpass)
+        self.t = customtkinter.CTkLabel(self, textvariable=self.crackstr, text_color="#363636", text_font=("Segoe UI", 9))
+        self.t.pack(fill=tk.X, expand=tk.NO, pady=2, padx=2)
+
+        self.strenstr.set("No Password Entered")
+        self.crackstr.set("Can be cracked in: 0 seconds")
 
         self.f = customtkinter.CTkFrame(self, fg_color="#000000")
         self.f.pack(expand=tk.NO, pady=10, padx=2)
@@ -117,29 +99,31 @@ class PassCheck(customtkinter.CTkFrame):
         self.value = int(res["nstrength"])/4
         self.progressbar.set(self.value)
         self.progressbar.configure(progress_color=res["color"])
-        if res["length"] > 0:
-            self._setPass(res["strength"])
-        else:
-            self._setPass("No Password Entered")
-        if res["lowercase"] == True:
-            self.lowerc.configure(fg_color="#107C10")
-        else:
-            self.lowerc.configure(fg_color="#181A1B")
-        if res["uppercase"] == True:
-            self.upperc.configure(fg_color="#107C10")
-        else:
-            self.upperc.configure(fg_color="#181A1B")
-        if res["numbers"] == True:
-            self.numberc.configure(fg_color="#107C10")
-        else:
-            self.numberc.configure(fg_color="#181A1B")
-        if res["special"] == True:
-            self.specialc.configure(fg_color="#107C10")
-        else:
-            self.specialc.configure(fg_color="#181A1B")
+        with contextlib.suppress(Exception):
+            if res["length"] > 0:
+                self._setPass(res["strength"], res["time"])
+            else:
+                self._setPass("No Password Entered", res["time"])
+            if res["lowercase"] == True:
+                self.lowerc.configure(fg_color="#107C10")
+            else:
+                self.lowerc.configure(fg_color="#181A1B")
+            if res["uppercase"] == True:
+                self.upperc.configure(fg_color="#107C10")
+            else:
+                self.upperc.configure(fg_color="#181A1B")
+            if res["numbers"] == True:
+                self.numberc.configure(fg_color="#107C10")
+            else:
+                self.numberc.configure(fg_color="#181A1B")
+            if res["special"] == True:
+                self.specialc.configure(fg_color="#107C10")
+            else:
+                self.specialc.configure(fg_color="#181A1B")
 
-    def _setPass(self, password):
+    def _setPass(self, password, time):
         self.strenstr.set(password)
+        self.crackstr.set(f"Can be cracked in: {time}")
 
         
     def load_image(self, path):
@@ -150,7 +134,7 @@ if __name__ == '__main__':
     root = customtkinter.CTk()
     root.title('')
     root.iconbitmap("./assets/icon_pass11.ico")
-    root.geometry("420x150")
+    root.geometry("420x180")
     root.resizable(False, False)
     root.eval('tk::PlaceWindow . center')
     root.configure(bg="#000000")
@@ -161,4 +145,3 @@ if __name__ == '__main__':
     #root.protocol('WM_DELETE_WINDOW', PassCheck().hide_window)
     PassCheck(root).pack()
     root.mainloop()
-    
