@@ -32,7 +32,7 @@
 - Generate secured passwords
 - Test your passwords security
 
-<img style="width: 76%" src="https://s1.gifyu.com/images/Animationb690dfe04aedfe68.gif" />
+<img style="width: 76%" src="https://media.discordapp.net/attachments/765711969234976829/1043444550838013972/Animation4.gif" />
 
 
 App made using [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter "CustomTkinter") .
