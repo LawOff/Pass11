@@ -31,6 +31,7 @@ class PassCheck(customtkinter.CTkFrame):
         self.upper_image = self.load_image("/assets/upper_image.svg")
         self.number_image = self.load_image("/assets/number_image.svg")
         self.special_image = self.load_image("/assets/special_image.svg")
+        self.lenght_image = self.load_image("/assets/lenght_image.svg") #newline
         
         self.showeye_image = self.load_image("/assets/showeye_image.svg")
         self.hideeye_image = self.load_image("/assets/hideeye_image.svg")
@@ -69,11 +70,17 @@ class PassCheck(customtkinter.CTkFrame):
         self.upperc = customtkinter.CTkButton(self.f, text=None, image=self.upper_image, fg_color="#181A1B", state="disabled", width=30, height=30)
         self.numberc = customtkinter.CTkButton(self.f, text=None, image=self.number_image, fg_color="#181A1B", state="disabled", width=30, height=30)
         self.specialc = customtkinter.CTkButton(self.f, text=None, image=self.special_image, fg_color="#181A1B", state="disabled", width=30, height=30)
+        self.lenght = customtkinter.CTkButton(self.f, text=None, image=self.lenght_image, fg_color="#181A1B", state="disabled", width=30, height=30) 
         
         self.lowerc.pack(side=tk.LEFT, padx=10, pady=2)
         self.upperc.pack(side=tk.LEFT, padx=10, pady=2)
         self.numberc.pack(side=tk.LEFT, padx=10, pady=2)
         self.specialc.pack(side=tk.LEFT, padx=10, pady=2)
+        self.lenght.pack(side=tk.LEFT, padx=10, pady=2) ## newline
+
+        self.length_entry = customtkinter.CTkEntry(self.f, justify='center', text_color="#DDE6E8", width=10, text_font=("Segoe UI", 9, "bold")) ## newline
+        self.length_entry.pack(side=tk.LEFT, padx=0, pady=5) ## newline
+
 
     def ShowPass(self):
         if self.showval:
@@ -86,8 +93,15 @@ class PassCheck(customtkinter.CTkFrame):
             self.passEntry.configure(show="*")
         
     def RandomPass(self):
+        length_str = self.length_entry.get()
+        try:
+            length = int(length_str)
+        except ValueError:
+        # Gestire il caso in cui l'input non sia un numero intero valido
+            return
+    
         alphabet = string.ascii_letters + string.digits + "@$!%*?&"
-        password = "".join(secrets.choice(alphabet) for _ in range(8))
+        password = "".join(secrets.choice(alphabet) for _ in range(length))
         self.passstr.set(password)
     
     def _update(self, *args):
