@@ -70,7 +70,7 @@ class PassCheck(customtkinter.CTkFrame):
         self.upperc = customtkinter.CTkButton(self.f, text=None, image=self.upper_image, fg_color="#181A1B", state="disabled", width=30, height=30)
         self.numberc = customtkinter.CTkButton(self.f, text=None, image=self.number_image, fg_color="#181A1B", state="disabled", width=30, height=30)
         self.specialc = customtkinter.CTkButton(self.f, text=None, image=self.special_image, fg_color="#181A1B", state="disabled", width=30, height=30)
-        self.lenght = customtkinter.CTkButton(self.f, text=None, image=self.lenght_image, fg_color="#181A1B", state="disabled", width=30, height=30) 
+        self.length_entry = customtkinter.CTkEntry(self.f, justify='center', fg_color="#181A1B",text_color="#DDE6E8", width=31, height=31, text_font=("Segoe UI", 9, "bold"))
         
         self.lowerc.pack(side=tk.LEFT, padx=10, pady=2)
         self.upperc.pack(side=tk.LEFT, padx=10, pady=2)
@@ -78,7 +78,6 @@ class PassCheck(customtkinter.CTkFrame):
         self.specialc.pack(side=tk.LEFT, padx=10, pady=2)
         self.lenght.pack(side=tk.LEFT, padx=10, pady=2) ## newline
 
-        self.length_entry = customtkinter.CTkEntry(self.f, justify='center', text_color="#DDE6E8", width=10, text_font=("Segoe UI", 9, "bold")) ## newline
         self.length_entry.pack(side=tk.LEFT, padx=0, pady=5) ## newline
 
 
